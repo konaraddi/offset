@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="bulma.css" />
+    <script defer src="fontawesome.js"></script>
+  </head>
+
+  <body>
+    <section class="section" style="width: 360px;">
+      <h1 class="title is-3">Settings</h1>
+
+      <div class="field">
+        <label class="label">Goal</label>
+        <div class="control has-icons-right">
+          <input class="input" type="number" placeholder="" value="30" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-tree"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Percentage</label>
+        <div class="control has-icons-right">
+          <input class="input" type="number" placeholder="" value="1" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-percent"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field is-expanded">
+        <label class="label">Credit Card</label>
+        <div class="field has-addons">
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="password"
+              placeholder="Email input"
+              value="4111 1111 1111 1111"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-credit-card"></i>
+            </span>
+          </div>
+          <p class="control is-expanded">
+            <input class="input" type="" placeholder="MM/YY" />
+          </p>
+          <p class="control is-expanded">
+            <input class="input" type="" placeholder="CVC" />
+          </p>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" checked />
+            I agree to the <a href="#">terms & conditions</a>
+          </label>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link">Save</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light">Cancel</button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,11 +1,14 @@
 {
   "name": "Offset",
   "version": "1.0",
-  "description": "Passively reduce your carbon footprint.",
+  "description": "Passively offset your carbon footprint.",
   "manifest_version": 2,
   "permissions": [
     "storage"
   ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
   "background": { "scripts": ["hot_reload.js"] },
   "content_scripts": [
     {
