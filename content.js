@@ -16,11 +16,8 @@ function getData(
   chrome.storage.sync.get(["money", "tons"], data => callback(data));
 }
 
-setTimeout(() => {
+let showModal = () => {
   console.log(`CONTENT SCRIPT LOADED AT ${new Date().toLocaleTimeString()}`);
-
-  // test
-  saveData(12, 34, () => getData());
 
   const url = location.href;
   const isJetcom = url == "https://jet.com/checkout";
@@ -29,58 +26,93 @@ setTimeout(() => {
     url.substring(0, 56) ==
       "https://www.aa.com/booking/passengers?bookingPathStateId";
 
-  if (!isJetcom && !isAmericanAirlines) {
-    return;
-  }
-
-  if (isJetcom) {
-    document.body.style.backgroundColor = "rgb(247, 247, 247)";
-    document.getElementsByClassName(
-      "base__Box-sc-1l64hnd-1 dlFWri"
-    )[0].style.marginTop = "100px";
-  }
+  /*
+    if (!isJetcom && !isAmericanAirlines) {
+      return;
+    }
+    */
 
   document.body.innerHTML =
     `
-    <div class="box" style="background-color: #ebfffc;">
-      <div class="container">
-        <div id="app">
-          <div class="level" v-if="!donated">
-            <div class="level-left">
-              <div class="level-item  has-text-centered">
-                <h3 class="subtitle is-3 is-centered">
-                  Donate 1% of your purchase to offset <strong>{{tons}}</strong> tonnes of carbon.
-                </h3>
+    <div><style>
+    .progress::-webkit-progress-value {
+      transition: width 0.5s ease;
+    }
+    </style>
+      <div id="app">
+      <div v-bind:class="['modal modal-fx-fadeInScale', {'is-active': isActive}]">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Thank you!</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="level is-mobile">
+              
+              <div class="level-item has-text-centered">
+                <div>
+                  <p id="counter2" class="title">$789</p>
+                  <p class="heading">donations (USD)</p>
+                </div>
               </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item  has-text-centered">
-                <button class="button is-primary is-large" v-on:click="onDonate" v-bind:class="{'is-loading': isDonating}">Donate \${{money}}</button>
+
+              <div class="level-item has-text-centered">
+                <div>
+                  <p id="counter1" class="title">3,456</p>
+                  <p class="heading">Tonns of Carbon</p>
+                </div>
               </div>
-              <!--
-              <div class="level-item  has-text-centered">
-                <button class="button is-large">Learn More</button>
-              </div>
-              -->
+
             </div>
-          </div>
-          <div class="level" v-else>
-            <div class="level-item has-text-centered">
-                <h3 class="subtitle is-3 is-centered">
-                  Thank you for offsetting <strong>{{tons}}</strong> tonnes of carbon!
-                </h3>
-            </div>
-          </div>
+            <h5 class="subtitle is-5">Offset 10 more tonnes of carbon to reach your goal!</h5>
+            <progress
+              id="progress-bar"
+              class="progress is-success is-medium"
+              :value="progressBarValue"
+              max="100"
+            ></progress>
+            <p>Your purchases are set to {{percent}}% of your purchases.</p>
+            <p>You can change your percent, goal, and payment method in the extension's settings.</p>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-danger">Cancel</button>
+            <button class="button">Learn more</button>
+          </footer>
         </div>
       </div>
-    </div>
-    ` + document.body.innerHTML;
+      </div>
+      </div>
+      ` + document.body.innerHTML;
 
   new Vue({
     el: "#app",
     data: {
+      percent: 1,
+      goal: 100, 
       isDonating: false,
-      donated: false
+      donated: false,
+      isActive: true,
+      progressBarValue: 0,
+    },
+    mounted() {
+      const countUp1 = new CountUp("counter1", 5234, { startVal: 2000 });
+      if (!countUp1.error) {
+        countUp1.start();
+      } else {
+        console.error(countUp.error);
+      }
+
+      const countUp2 = new CountUp("counter2", 7004, { startVal: 2000, prefix: "$" });
+      if (!countUp2.error) {
+        countUp2.start();
+      } else {
+        console.error(countUp.error);
+      }
+
+      setTimeout(() => this.progressBarValue = 40, 250)
+
+      setTimeout(() => (this.isActive = false), 6000);
     },
     computed: {
       money() {
@@ -128,4 +160,6 @@ setTimeout(() => {
       }
     }
   });
-}, 1500);
+};
+
+setTimeout(showModal, 1500);

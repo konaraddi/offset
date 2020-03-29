@@ -12,11 +12,11 @@
       "matches": [
         "https://jet.com/checkout", 
         "https://www.aa.com/booking/passengers?bookingPathStateId=*",
-        "https://*.com/*"
+        "https://www.pinterest.com/"
       ],
-      "css": ["bulma.css"],
-      "js": ["vue.js", "content.js"],
+      "css": ["bulma.css", "modal-fx.min.css"],
+      "js": ["count-up.js", "vue.js", "modal-fx.min.js", "content.js"],
       "run_at": "document_end"
     }
-  ]
+  ] 
 }

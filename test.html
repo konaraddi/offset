@@ -7,28 +7,60 @@
     />
   </head>
   <body>
-    <section class="section" style="background-color: #ebfffc;">
-      <div class="container">
-        <div id="app">
-          <div class="level">
-            <div class="level-left">
-              <div class="level-item  has-text-centered">
-                <h5 class="subtitle is-3 is-centered">
-                  Donate 1% of your purchase to offset <strong>{{tons}}</strong> tonnes of carbon.
-                </h5>
+    <div>
+      <style>
+        .progress::-webkit-progress-value {
+          transition: width 0.5s ease;
+        }
+      </style>
+      <div id="app">
+        <div
+          v-bind:class="['modal modal-fx-fadeInScale', {'is-active': isActive}]"
+        >
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Thank you!</p>
+              <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+              <div class="level is-mobile">
+                <div class="level-item has-text-centered">
+                  <div>
+                    <p id="counter2" class="title">$789</p>
+                    <p class="heading">donations (USD)</p>
+                  </div>
+                  <div class="level-item has-text-centered">
+                    <div>
+                      <p id="counter1" class="title">3,456</p>
+                      <p class="heading">Tonns of Carbon</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item  has-text-centered">
-                <button class="button is-primary is-large">Donate \${{money}}</button>
-              </div>
-              <div class="level-item  has-text-centered">
-                <button class="button is-large">Learn More</button>
-              </div>
-            </div>
+              <h5 class="subtitle is-5">
+                You've offset {{tons}} tonnes of carbon so far!<br />
+                Currently your goal is to offset {{}} tonnes.
+              </h5>
+              <progress
+                id="progress-bar"
+                class="progress is-success is-medium"
+                :value="progressBarValue"
+                max="100"
+              ></progress>
+              <p>Your purchases are set to {{}}% of your purchases.</p>
+              <p>
+                You can change your %, goal, and payment method in the
+                extension's settings.
+              </p>
+            </section>
+            <footer class="modal-card-foot">
+              <button class="button is-danger">Cancel</button>
+              <button class="button">Learn more</button>
+            </footer>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </body>
 </html>
