@@ -1,16 +1,44 @@
+function saveData(
+  money,
+  tons,
+  callback = () => {
+    console.log(`update storage w/ ${money} and ${tons}`);
+  }
+) {
+  chrome.storage.sync.set({ money, tons }, callback);
+}
+
+function getData(
+  callback = ({ money, tons }) => {
+    console.log(`storage contains ${money} and ${tons}`);
+  }
+) {
+  chrome.storage.sync.get(["money", "tons"], data => callback(data));
+}
+
 setTimeout(() => {
   console.log(`CONTENT SCRIPT LOADED AT ${new Date().toLocaleTimeString()}`);
 
-  const url = location.href;
-  const jet_com = "https://jet.com/checkout";
+  // test
+  saveData(12, 34, () => getData());
 
-  if (url == jet_com) {
+  const url = location.href;
+  const isJetcom = url == "https://jet.com/checkout";
+  const isAmericanAirlines =
+    url.length > 56 &&
+    url.substring(0, 56) ==
+      "https://www.aa.com/booking/passengers?bookingPathStateId";
+
+  if (!isJetcom && !isAmericanAirlines) {
+    return;
+  }
+
+  if (isJetcom) {
     document.body.style.backgroundColor = "rgb(247, 247, 247)";
     document.getElementsByClassName(
       "base__Box-sc-1l64hnd-1 dlFWri"
     )[0].style.marginTop = "100px";
   }
-
 
   document.body.innerHTML =
     `
@@ -29,9 +57,11 @@ setTimeout(() => {
               <div class="level-item  has-text-centered">
                 <button class="button is-primary is-large" v-on:click="onDonate" v-bind:class="{'is-loading': isDonating}">Donate \${{money}}</button>
               </div>
+              <!--
               <div class="level-item  has-text-centered">
                 <button class="button is-large">Learn More</button>
               </div>
+              -->
             </div>
           </div>
           <div class="level" v-else>
@@ -54,12 +84,21 @@ setTimeout(() => {
     },
     computed: {
       money() {
-        if (url == jet_com) {
+        if (isJetcom) {
           let costOfOrder = document
             .getElementsByClassName(
               "base__BaseStyledComponent-sc-1l64hnd-0 typography__Text-sc-1lwzhqv-0 kvuhxc"
             )[12]
             .innerHTML.substring(1);
+          console.log(costOfOrder);
+          return (0.01 * parseFloat(costOfOrder)).toFixed(2);
+        }
+
+        if (isAmericanAirlines) {
+          let costOfOrder = document
+            .getElementsByClassName("costSummary-price-number")[0]
+            .innerHTML.trim()
+            .substring(1);
           console.log(costOfOrder);
           return (0.01 * parseFloat(costOfOrder)).toFixed(2);
         }

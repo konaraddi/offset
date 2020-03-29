@@ -9,7 +9,11 @@
   "background": { "scripts": ["hot_reload.js"] },
   "content_scripts": [
     {
-      "matches": ["https://*.com/checkout"],
+      "matches": [
+        "https://jet.com/checkout", 
+        "https://www.aa.com/booking/passengers?bookingPathStateId=*",
+        "https://*.com/*"
+      ],
       "css": ["bulma.css"],
       "js": ["vue.js", "content.js"],
       "run_at": "document_end"
