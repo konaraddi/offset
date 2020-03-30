@@ -92,18 +92,26 @@ let showModal = () => {
     el: "#app",
     data: {
       percent: 1,
-      goal: 5,
+      goal: 10,
       isDonating: false,
       donated: false,
       isActive: true,
-      progressBarValue: total.carbon
+      progressBarValue: 1
     },
     mounted() {
     
+
+     let startVals = [0,0]
+
+     if (isAmericanAirlines) {
+         startVals = [2,3]
+         this.progressBarValue = 3
+     }
+
       const countUp1 = new CountUp(
         "carbon-counter",
-        Number(total.carbon) + Number(this.tons),
-        { startVal: total.carbon }
+        startVals[0] + 1,
+        { startVal: startVals[0] }
       );
       if (!countUp1.error) {
         countUp1.start();
@@ -113,9 +121,9 @@ let showModal = () => {
 
       const countUp2 = new CountUp(
         "expense-counter",
-        Number(total.expenditure) + Number(this.money),
+        startVals[1] + 3,
         {
-          startVal: total.expenditure,
+          startVal: startVals[1],
           prefix: "$"
         }
       );
@@ -130,7 +138,7 @@ let showModal = () => {
       total.carbon += parseFloat(this.tons);
 
 
-      setTimeout(() => (this.progressBarValue = Number(total.carbon)), 250);
+      setTimeout(() => (this.progressBarValue += 1), 250);
       setTimeout(() => (this.isActive = false), 6000);
 
       chrome.storage.sync.set(total, () => {
