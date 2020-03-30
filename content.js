@@ -102,7 +102,7 @@ let showModal = () => {
     
       const countUp1 = new CountUp(
         "carbon-counter",
-        total.carbon + this.tons,
+        Number(total.carbon) + Number(this.tons),
         { startVal: total.carbon }
       );
       if (!countUp1.error) {
@@ -113,7 +113,7 @@ let showModal = () => {
 
       const countUp2 = new CountUp(
         "expense-counter",
-        total.expenditure + this.money,
+        Number(total.expenditure) + Number(this.money),
         {
           startVal: total.expenditure,
           prefix: "$"

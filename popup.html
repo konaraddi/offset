@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="bulma.css" />
     <script defer src="fontawesome.js"></script>
+
+    <script defer src="popup.js"></script>
   </head>
 
   <body>
@@ -45,11 +47,11 @@
               <i class="fas fa-credit-card"></i>
             </span>
           </div>
-          <p class="control is-expanded">
-            <input class="input" type="" placeholder="MM/YY" />
+          <p class="control">
+            <input class="input" type="" value="03/30" />
           </p>
-          <p class="control is-expanded">
-            <input class="input" type="" placeholder="CVC" />
+          <p class="control">
+            <input class="input" type="" value="123" />
           </p>
         </div>
       </div>
@@ -65,10 +67,10 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button class="button is-link">Save</button>
+          <button id="save-btn" class="button is-link">Save</button>
         </div>
         <div class="control">
-          <button class="button is-link is-light">Cancel</button>
+        <button class="button is-link is-light">Cancel</button>
         </div>
       </div>
     </section>
